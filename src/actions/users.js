@@ -1,6 +1,6 @@
 import { FETCH_USERS_INITIATED, FETCH_USERS_SUCCESS, FETCH_USERS_FAIL } from 'UTILS/actionConstants';
 
-export function fetchUsersInitiate() {
+function fetchUsersInitiate() {
   return {
     type: FETCH_USERS_INITIATED,
   }
@@ -25,9 +25,10 @@ export const fetchUsers = () => {
     dispatch(fetchUsersInitiate());
     fetch(`https://jsonplaceholder.typicode.com/users`)
     .then((response) => {
-      response.json().then(data => {
-        dispatch(fetchUsersSuccess(data));
-      });
+      return response.json()
+    })
+    .then(data => {
+      dispatch(fetchUsersSuccess(data));
     })
     .catch((error) => {
       dispatch(fetchUsersFail(error));
